@@ -1,37 +1,56 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+    <!--Core DLL Properties-->
+    <PropertyGroup>
+        <TargetFrameworks>netframework4.7.2</TargetFrameworks>
+        <RuntimeIdentifiers>win-x64;win-x86;win-arm64;linux-x64;linux-arm;linux-arm64;linux-musl-x64;linux-musl-arm64;osx-x64;osx-arm64</RuntimeIdentifiers>
+        <AssemblyName>ANSI Mod</AssemblyName>
+        <Description>This mod simply enables ANSI and UTF-8 for Windows Terminals e.g. the BepInEx Console, this relies on the Cecil.ANSI_Utils functionality.</Description>
+        <Version>2.0.0</Version>
+        <Authors>Chaosyr</Authors>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <LangVersion>Latest</LangVersion>
+        <RootNamespace>AnsiConsolePlugin</RootNamespace>
+        <NoWarn>$(NoWarn);AD0001;CS0612;CS0618;Publicizer001</NoWarn>
+        <SelfContained>true</SelfContained>
+        <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+        <IncludeBuildOutput>false</IncludeBuildOutput>
+    </PropertyGroup>
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <Description>A mod that enables ANSI for Windows 10+ in BepInEx.</Description>
-    <Version>1.0.0</Version>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <LangVersion>Latest</LangVersion>
-    <RootNamespace>AnsiConsolePlugin</RootNamespace>
-    <PackageId>AnsiConsolePlugin</PackageId>
-  </PropertyGroup>
+    <!--NUGET Dependencies-->
+    <ItemGroup>
+        <PackageReference Include="BepInEx.Analyzers" Version="1.0.8" PrivateAssets="all" />
+        <PackageReference Include="BepInEx.Core" Version="5.4.21" />
+        <PackageReference Include="BepInEx.PluginInfoProps" Version="2.1.0" />
+        <PackageReference Include="Cecil.ANSI_Utils" Version="2.0.0" />
+        <PackageReference Include="UnityEngine.Modules" Version="2019.4.24" IncludeAssets="compile" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="BepInEx-MonoMod_Loader_Inscryption" Version="1.0.0" />
-    <PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
-    <PackageReference Include="BepInEx.Core" Version="5.4.21" />
-    <PackageReference Include="BepInEx.PluginInfoProps" Version="2.1.0" />
-    <PackageReference Include="UnityEngine.Modules" Version="2019.4.24" IncludeAssets="compile" />
-    <PackageReference Include="Inscryption.GameLibs" Version="1.9.0-r.0" />
-  </ItemGroup>
+    <!--Net Framework References-->
+    <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
+        <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all" />
+    </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
-    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.2" PrivateAssets="all" />
-  </ItemGroup>
-    
-	<ItemGroup>
-		<PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.0">
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-			<PrivateAssets>all</PrivateAssets>
-		</PackageReference>
-		<Reference Include="Sirenix.Serialization">
-			<HintPath>lib\Sirenix.Serialization.dll</HintPath>
-			<Publicize>true</Publicize>
-			<Private>false</Private>
-		</Reference>
-	</ItemGroup>
+    <!--Cleanup Publish for our Build System-->
+    <Target Name="StripAllNuGetFromPublish" AfterTargets="ComputeFilesToPublish">
+        <ItemGroup>
+            <ResolvedFileToPublish Remove="@(ResolvedFileToPublish)" Condition="'%(ResolvedFileToPublish.Extension)' == '.dll' and '%(ResolvedFileToPublish.RelativePath)' != 'ANSI Mod.dll'" />
+        </ItemGroup>
+    </Target>
+
+    <!--Build System Properties-->
+    <PropertyGroup>
+        <!--Copy Locations-->
+        <BuildCopyLocations>Thunderstore-Package-Elements</BuildCopyLocations>
+        <BuildOutputLocations>BepInEx/patchers</BuildOutputLocations>
+        <CHANGELOGCopyLocation>CHANGELOG.md</CHANGELOGCopyLocation>
+        <READMECopyLocation>README.md</READMECopyLocation>
+        <LICENSECopyLocation>LICENSE.md</LICENSECopyLocation>
+        <ReleaseMode>Release</ReleaseMode>
+        <!--Thunderstore Manifest Properties-->
+        <ThunderstorePackageName>ANSI_Mod</ThunderstorePackageName>
+        <ThunderstorePackageVersion>2.0.0</ThunderstorePackageVersion>
+        <ThunderstoreWebsiteURL>https://github.com/SaxbyMod/ANSI-Mod</ThunderstoreWebsiteURL>
+        <ThunderstorePackageDescription>This mod simply enables ANSI and UTF-8 for Windows Terminals e.g. the BepInEx Console, this relies on the Cecil.ANSI_Utils functionality.</ThunderstorePackageDescription>
+        <ThunderstorePackageDependencyStrings>Cecil_Libraries_Organization-Cecil_Libraries_Package-1.0.0</ThunderstorePackageDependencyStrings>
+    </PropertyGroup>
 </Project>

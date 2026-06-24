@@ -1,58 +1,93 @@
 # ANSI Mod
+This mod simply enables ANSI and UTF-8 for Windows Terminals e.g. the BepInEx Console, this relies on the Cecil.ANSI_Utils functionality.
 
-This mod essentially enables the ability to use ANSI in BepInEx for Windows 10+.
+This is released as Open-Source subject to the terms found within [SML-1.0.0](https://stoatgames.icu/license-repository/licenses/sml-1-0-0/#content)
 
-## Functions;
+## What does this do?
 
-This mod Includes 2 Nifty functions for fetching a ANSI Code Color.
+If not answered clear enough already, this enables Virtual Terminal Processing for Windows OS Terminals that don't have it enabled by default, for example, BepInEx. This mod also on runtime enables UTF8 for both Input and Output encoding.
 
-* GetColorFromInt; Takes a Int from 0-7, and a String related to the Type of Color System your after.
-* GetColorFromString; Takes a String that represents the color, note in present theres only 7 shades, and a String related to the type of Color System your after.
+This is ran during the Patchers phase meaning it runs prior to both MonoMod and Plugins. e.g. You don't need to depend on it in your code to use ANSI anymore you just need this package in your Thunderstore Dependencies and Cecil.ANSI_Utils in your NuGet.
 
-## Defining The Function Variables;
+## How do I utilize ANSI?
 
-For the Int in GetColorFromInt here's a Nifty table association for the values, similarly the Color in the table represents the colors that can be Inputted in GetColorFromString;
+Our friends at the [Cecil Libraries Organization](https://stoatgames.icu/subsidiaries/cecil-libraries-organization/#header-container-subsite) made a library exactly for this purpose. It took Chaosyr's original code and turned it into something much more usable at larger scale. It may still have some subtle bugs, but it works a lot better than this mod ever did as a Library in usage.
 
-| Color | Int To Enter |
-|:-:|:------------:|
-| Black |      0       |
-| Red |      1       |
-| Green |      2       |
-| Yellow |      3       |
-| Blue |      4       |
-| Magenta |      5       |
-| Cyan |      6       |
-| White |      7       |
+While yes its **1** more dependency you need to keep track of, this mod in technicality is Optional. You don't need it to do ANSI unless your on Windows in a Terminal that doesn't natively support it.
 
-For the Modes its a bit more Complex but heres a Run Down; 
+[Cecil Libraries Organization](https://stoatgames.icu/subsidiaries/cecil-libraries-organization/#header-container-subsite) plans to put together a Dependency resolver, working with Thunderstore that way users don't need to install as many dependencies themselves, with direct to NuGet support. For more details you can contact them at `Contact&Support@stoatgames.icu` or via `Cecil.Libraries@gmail.com`.
 
-| Type |                                               What It Does                                               | What To Enter |
-|:-:|:--------------------------------------------------------------------------------------------------------:|:-:|
-| Regular |                               This is essentially just the Mundane colors.                               | Regular |
-| Bold |                        This will make the text and color bold and more prominent.                        | Bold |
-| Darkened |              The opposite of Bold, it will make the text and color dark and less prominent.              | Darkened |
-| Italic |                         This is will make the text along with the color Italic.                          | Italic |
-| Underlined |                         This will make the text along with the color Underlined.                         | Underlined |
-| Flashy |                      This will make the text along with the color Blink on and off.                      | Flashy |
-| Highlighter | This will make the text the shade given and the background behind it the inverse of the shade specified. | Highlighter |
-| Invisible |                         This will make the text invisible along with the color.                          | Invisible |
-| Strikethrough |                    This will make the text look like it has a line going through it.                     | Strikethrough |
-| Background |                   This will make the background behind the text the color associated.                    | Background |
-Each of the above also has a High Intensity variant which is essentially just a brighter version of the given shade, it can be called by entering `HighIntensity` before the mode your entering for example `HighIntensityRegular`.
+If it helps Cecil.ANSI_Utils is automatically attached to this Mod because of the fact it depends on it for the test logo, so you don't even necessarily list the Cecil Libraries package on Thunderstore just this one. It's attached via dependency to the [Cecil Libraries Package](https://thunderstore.io/c/inscryption/p/Cecil_Libraries_Organization/Cecil_Libraries_Package/).
 
-## Maintaining and or Updating/Porting:
+## Setup
 
-Send a PR to the repository if you would like to update the mod in any way shape or form.
+## Installing the Package
 
-Porting is allowed as long as proper and full credits are instated and the provided Liscense is KEPT.
+### Manager
+1. Open the Application, Navigate to the Game, Navigate to the Profile.
+2. Press `Browse` or the Manager's equivalent
+3. Install `Stoat_Games` - `ANSI Mod`.
+4. When you launch ANSI Mod is now installed.
 
-If you would like this mod/lib added into your community shoot me a message over on Discord at `@thincreator3483`
+### Manual
+1. Press `Download`
+2. Extract the Zip to a new folder.
+3. Take the files and folders under `BepInEx/patchers` of the zip and move them up a folder. 
+4. Delete the `BepInEx` folder from the Extracted directory.
+5. Now navigate to the location of your BepInEx install from your earlier setup for the API.
+6. Navigate to `patchers` and add a folder entitled `Stoat_Games-ANSI_Mod`, if there's a previous version of ANSI Mod installed it should be fine, but I'd advise removing it to keep storage down.
+7. Move the setup from steps `2-4` into the folder you created in step `7`.
+8. Now if all went well you should see a new print message adjacent to the following near the top of your log, and it should be in color (A Neon Green):
+   ```
+   ┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+   │                                                                                                                                                  │
+   │          ┌─────┬─────┐   ┌         ┐   ┌─────────┐          ┌────────────┐   ┌         ┐   ┌───────────┐   ┌──────────┐   ┌─────┬─────┐          │
+   │                │         │         │   │                    │                │         │   │           │   │                    │                │
+   │                │         │         │   │                    │                │         │   │           │   │                    │                │
+   │                │         │         │   │                    │                │         │   │           │   │                    │                │
+   │                │         ├─────────┤   ├──────────          │       ┌────┐   ├─────────┤   │           │   └──────────┐         │                │
+   │                │         │         │   │                    │            │   │         │   │           │              │         │                │
+   │                │         │         │   │                    │            │   │         │   │           │              │         │                │
+   │                │         │         │   │                    │            │   │         │   │           │              │         │                │
+   │                └         └         ┘   └─────────┘          └────────────┘   └         ┘   └───────────┘   └──────────┘         └                │
+   │                                                                                                                                                  │
+   │                                ┌─────┬─────┐   ┌┐        ┐          ┌─────┬─────┐   ┌         ┐   ┌─────────┐                                    │
+   │                                      │         │ ╎       │                │         │         │   │                                              │
+   │                                      │         │  ╎      │                │         │         │   │                                              │
+   │                                      │         │   ╎     │                │         │         │   │                                              │
+   │                                      │         │    ╎    │                │         ├─────────┤   ├──────────                                    │
+   │                                      │         │     ╎   │                │         │         │   │                                              │
+   │                                      │         │      ╎  │                │         │         │   │                                              │
+   │                                      │         │       ╎ │                │         │         │   │                                              │
+   │                                └─────┴─────┘   └        └┘                └         └         ┘   └─────────┘                                    │
+   │                                                                                                                                                  │
+   │                                           ┌───────────┐   ┌───────────┐   ┌─────────┐     ┌─────────┐                                            │
+   │                                           │               │           │   │          ╎    │                                                      │
+   │                                           │               │           │   │           ╎   │                                                      │
+   │                                           │               │     │     │   │     │      │  │                                                      │
+   │                                           │               │    ─│─    │   │    ─│─     │  ├──────────                                            │
+   │                                           │               │     │     │   │     │      │  │                                                      │
+   │                                           │               │           │   │           ╎   │                                                      │
+   │                                           │               │           │   │          ╎    │                                                      │
+   │                                           └───────────┘   └───────────┘   └─────────┘     └─────────┘                                            │
+   │                                                                                                                                                  │
+   └──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+   ```
+   For those curious this originates from: https://github.com/Chaosyr/GhostInTheCodeLogo which was made for a Band called Ghost In The Code coming soon:tm:.
 
-Also while im at it, if anything here is innacurate and or needs changes lemme know ^^
+## How you can support our Projects and their Developers:
 
-## Credits:
+* You can donate to Chaosyr (The Primary Developer in this case) here:
+    * Use code `Chaosyr` in Hytale Checkout, they will receive a portion of the Checkout proceeds.
+    * Use their KO-FI and donate or commission: https://ko-fi.com/thincreator3483
+* You can help Financially Support Stoat Games here:
+    * Use our affiliate link with IONOS: https://aklam.io/thGxWQTD (This is the most powerful method for keeping The Docs site alive.)
+    * Use our affiliate link with The Free Website Guys: https://thefreewebsiteguys.com/?js=a16638001b (Less powerful but it will support The Docs Site, and them)
+    * When the Option opens you can choose US to host your Projects Docs or Your Organizations Subsite under [Stoat Games](https://stoatgames.icu)
+* Contribute to our Projects
+    * You can send Pull Requests to any of our Projects to help make them work better for future users.
+    * You can submit Bug Reports so that we can help More Users have a better time with our Projects.
+    * You can Translate our Project [Stoat Games](https://stoatgames.icu).
+    * You can Contribute to the Project [Stoat Games](https://stoatgames.icu) by shooting us emails with Feedback and better code.
 
-As of 1.0.0
-
-* Creator - ANSICodeLists.cs, GetColorFromTypeFunctions.cs, and AnsiConsolePlugin.cs base. As well as the Thunderstore/GitHub relaed elements.
-* Regretfully GPT - EnableNativeAnsi.cs
+# LICENSED UNDER [SML-1.0.0](https://stoatgames.icu/license-repository/licenses/sml-1-0-0/#content)
