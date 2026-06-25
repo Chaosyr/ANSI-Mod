@@ -32,7 +32,7 @@ namespace AnsiConsolePlugin.Util
 		/// <param name="location">The Integer of the STD Handle</param>
 		/// <returns>An IntPtr representing the given STD Handle.</returns>
 		/// <remarks>This code is provided by Creator/Chaosyr/SaxbyMod/The Stoat Lord.</remarks>
-		[DllImport("kernel32.dll", SetLastError = true)]
+		[DllImport("kernel32.dll", EntryPoint = "GetStdHandle", SetLastError = true)]
 		public static extern IntPtr FetchSTDHandle(int location);
 
 		/// <summary>
@@ -42,7 +42,7 @@ namespace AnsiConsolePlugin.Util
 		/// <param name="fetchedMode">This is a uint representing the Value of the Handle.</param>
 		/// <returns>The setMode of the passed in Handle.</returns>
 		/// <remarks>This code is provided by Creator/Chaosyr/SaxbyMod/The Stoat Lord.</remarks>
-		[DllImport("kernel32.dll", SetLastError = true)]
+		[DllImport("kernel32.dll", EntryPoint = "GetConsoleMode", SetLastError = true)]
 		public static extern bool FetchSTDHandleValue(IntPtr passedHandle, out uint fetchedMode);
 
 		/// <summary>
@@ -52,7 +52,7 @@ namespace AnsiConsolePlugin.Util
 		/// <param name="setMode">This is a uint in which will act as the overrider for the Handles value.</param>
 		/// <returns>An updated STD Handle.</returns>
 		/// <remarks>This code is provided by Creator/Chaosyr/SaxbyMod/The Stoat Lord.</remarks>
-		[DllImport("kernel32.dll", SetLastError = true)]
+		[DllImport("kernel32.dll", EntryPoint = "SetConsoleMode", SetLastError = true)]
 		public static extern bool SetSTDHandleValue(IntPtr passedHandle, uint setMode);
 	}
 }

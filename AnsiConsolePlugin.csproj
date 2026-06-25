@@ -48,7 +48,7 @@
         <ReleaseMode>Release</ReleaseMode>
         <!--Thunderstore Manifest Properties-->
         <ThunderstorePackageName>ANSI_Mod</ThunderstorePackageName>
-        <ThunderstorePackageVersion>2.0.0</ThunderstorePackageVersion>
+        <ThunderstorePackageVersion>2.0.1</ThunderstorePackageVersion>
         <ThunderstoreWebsiteURL>https://github.com/SaxbyMod/ANSI-Mod</ThunderstoreWebsiteURL>
         <ThunderstorePackageDescription>This mod simply enables ANSI and UTF-8 for Windows Terminals e.g. the BepInEx Console, this relies on the Cecil.ANSI_Utils functionality.</ThunderstorePackageDescription>
         <ThunderstorePackageDependencyStrings>Cecil_Libraries_Organization-Cecil_Libraries_Package-1.0.0</ThunderstorePackageDependencyStrings>

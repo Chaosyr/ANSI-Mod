@@ -6,3 +6,5 @@
 * Reworked the Mod into a Patcher, utilizing Cecil Libraries Organization's Cecil.ANSI_Utils.
 * Removed the Library Elements (they migrated to Cecil.ANSI_Utils)
 * Move to Stoat Games for Management (That way any future employees of the Organization can maintain it.)
+## 2.0.1
+* Fix `kernel32.dll` calls, did not realize the names were fixed, but anyways this mod will actually work now!
